@@ -13,6 +13,9 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Mnemonika.API.DAL;
 using Mnemonika.API.DAL.Repository;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace Mnemonika.API
 {
@@ -32,6 +35,15 @@ namespace Mnemonika.API
             services.AddDbContext<RegistrationContext>(x => x.UseSqlite(Configuration.GetConnectionString("RegistrationConnection")));
             services.AddScoped<IUserRepositoryView, UserRepositoryView>();
             services.AddScoped<IUserRepositoryRegistration, UserRepositoryRegistration>();
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(option => 
+            {
+                option.TokenValidationParameters = new TokenValidationParameters{
+                    ValidateIssuerSigningKey=true,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Configuration.GetSection("AppSettings:Token").Value)),
+                    ValidateIssuer = false,
+                    ValidateAudience = false
+                };
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -42,6 +54,7 @@ namespace Mnemonika.API
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseAuthentication();
             app.UseRouting();
 
             app.UseAuthorization();

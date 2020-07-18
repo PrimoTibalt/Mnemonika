@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Mnemonika.API.DAL.Repository;
@@ -23,9 +24,17 @@ namespace Mnemonika.API.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> GetUsers()
         {
-            return Ok(_repos.GetUser("Bob"));
+            return Ok(await _repos.GetUsers());
+        }
+
+        [HttpGet("login")]
+        [Authorize]
+        public async Task<IActionResult> GetUser(string login)
+        {
+            return Ok(await _repos.GetUser(login));
         }
     }
 }

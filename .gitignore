@@ -6,4 +6,5 @@
 *.code-workspace
 obj
 bin
-UsersReg.db
+*.db
+appsettings.json
