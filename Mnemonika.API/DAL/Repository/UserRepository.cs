@@ -1,31 +1,30 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using Mnemonika.API.Dtos;
 using Mnemonika.API.Models;
 
 namespace Mnemonika.API.DAL.Repository
 {
-    public class UserRepository : IUserRepository
+    public class UserRepositoryView : IUserRepositoryView
     {
         protected RegistrationContext _context {get; set;}
 
-        public UserRepository(RegistrationContext context)
+        public UserRepositoryView(RegistrationContext context)
         {
             _context = context;
         }
 
-        public User GetUser(string login, string password)
+        public async Task<User> GetUser(string login)
         {
-            throw new NotImplementedException(nameof(GetUser));
+            return await _context.users.FirstOrDefaultAsync(u => u.Username == login);
         }
 
-        public IList<User> GetUsers()
+        public async Task<IList<User>> GetUsers()
         {
-            throw new NotImplementedException(nameof(GetUsers));
-        }
-
-        public RegistrationResult UserRegistration(string login, string password)
-        {
-            throw new NotImplementedException(nameof(UserRegistration));
+            return await _context.users.ToListAsync();
         }
     }
 }

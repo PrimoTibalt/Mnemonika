@@ -14,9 +14,9 @@ namespace Mnemonika.API.Controllers
     {
         private readonly ILogger<RegController> _logger;
 
-        private readonly IUserRepository _repos;
+        private readonly IUserRepositoryView _repos;
 
-        public UsersController(ILogger<RegController> logger, IUserRepository repos)
+        public UsersController(ILogger<RegController> logger, IUserRepositoryView repos)
         {
             _logger = logger;
             _repos = repos;
@@ -25,7 +25,7 @@ namespace Mnemonika.API.Controllers
         [HttpGet]
         public async Task<IActionResult> GetUsers()
         {
-            return Ok(_repos.GetUser("Bob", "password"));
+            return Ok(_repos.GetUser("Bob"));
         }
     }
 }

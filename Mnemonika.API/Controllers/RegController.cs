@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Mnemonika.API.DAL.Repository;
+using Mnemonika.API.Dtos;
 
 namespace Mnemonika.API.Controllers
 {
@@ -14,20 +16,25 @@ namespace Mnemonika.API.Controllers
     {
         private readonly ILogger<RegController> _logger;
 
-        private readonly IUserRepository _repos;
+        private readonly IUserRepositoryRegistration _repos;
 
-        public RegController(ILogger<RegController> logger, IUserRepository repos)
+        private readonly IConfiguration _config;
+
+        public RegController(ILogger<RegController> logger, IUserRepositoryRegistration repos)
         {
             _logger = logger;
             _repos = repos;
         }
 
         [HttpPost]
-        public async Task<IActionResult> Register()
+        public async Task<IActionResult> Register(UserRegistrationDto user)
         {
-            // Create validation of user.
-            // Create registration method.
-            throw new NotImplementedException(nameof(Register));
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            return Ok(await _repos.UserRegistration(user.Login, user.Password));
         }
     }
 }
