@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using Mnemonika.API.Models;
 
 namespace Mnemonika.API.DAL.Repository
@@ -18,6 +19,12 @@ namespace Mnemonika.API.DAL.Repository
             byte[] passwordHash, passwordSalt;
             try
             {
+                var existingUser = await _context.users.FirstAsync(u => u.Username == login);
+                if (existingUser != null)
+                {
+                    throw new ArgumentException($"User with name {login} already exists.");
+                }
+
                 CreatePasswordHash(password, out passwordHash, out passwordSalt);
                 var user = new User()
                 {
@@ -32,6 +39,10 @@ namespace Mnemonika.API.DAL.Repository
             catch(Microsoft.EntityFrameworkCore.DbUpdateException)
             {
                 return new RegistrationResult() { Message="Troubles with database update", IsSucceeded=false };
+            }
+            catch(ArgumentException are)
+            {
+                return new RegistrationResult() { Message=are.Message, IsSucceeded=false };
             }
         }
 
