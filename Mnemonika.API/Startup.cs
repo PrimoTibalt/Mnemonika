@@ -32,6 +32,13 @@ namespace Mnemonika.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddCors(options => {
+                options.AddDefaultPolicy(
+                    builder => {
+                        builder.AllowAnyMethod().AllowAnyOrigin().AllowAnyHeader();
+                    }
+                );
+            });
             services.AddDbContext<RegistrationContext>(x => x.UseSqlite(Configuration.GetConnectionString("RegistrationConnection")));
             services.AddScoped<IUserRepositoryView, UserRepositoryView>();
             services.AddScoped<IUserRepositoryRegistration, UserRepositoryRegistration>();
@@ -56,7 +63,7 @@ namespace Mnemonika.API
 
             app.UseAuthentication();
             app.UseRouting();
-
+            app.UseCors();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

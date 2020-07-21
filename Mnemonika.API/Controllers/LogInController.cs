@@ -40,13 +40,13 @@ namespace Mnemonika.API.Controllers
         {
             if (user is null)
             {
-                return Unauthorized();
+                return Unauthorized("user is null");
             }
             
             var userFromRepos = await _repos.GetUser(user.Login);
             if (userFromRepos is null)
             {
-                return Unauthorized();
+                return Unauthorized("user doesnt exists");
             }
 
             var claims = new[] {
