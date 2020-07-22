@@ -16,6 +16,10 @@ using Mnemonika.API.DAL.Repository;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using System.Data;
+using System.Data.SqlClient;
+using Mnemonika.API.DAL.Repository.MnemoRepositoryFolder;
+using Microsoft.Data.Sqlite;
 
 namespace Mnemonika.API
 {
@@ -32,6 +36,7 @@ namespace Mnemonika.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
             services.AddCors(options => {
                 options.AddDefaultPolicy(
                     builder => {
@@ -39,9 +44,15 @@ namespace Mnemonika.API
                     }
                 );
             });
+
             services.AddDbContext<RegistrationContext>(x => x.UseSqlite(Configuration.GetConnectionString("RegistrationConnection")));
+
             services.AddScoped<IUserRepositoryView, UserRepositoryView>();
             services.AddScoped<IUserRepositoryRegistration, UserRepositoryRegistration>();
+            services.AddTransient<IDbConnection>(x => new SqliteConnection(this.Configuration.GetConnectionString("MnemoConnection")));
+            services.AddScoped<MnemoContext, MnemoContext>();
+            services.AddScoped<IMnemoRepository, MnemoRepository>();
+
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(option => 
             {
                 option.TokenValidationParameters = new TokenValidationParameters{
