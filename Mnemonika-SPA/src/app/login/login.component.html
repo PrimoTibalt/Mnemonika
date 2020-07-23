@@ -1,5 +1,6 @@
 <div  class="upper-login-container">
-  <div *ngIf="!authorized" class="login-container">
+  <app-Mnemo></app-Mnemo>
+  <div *ngIf="!authorized.isAuthorized" class="login-container" id="logCont">
     <form #loginForm="ngForm" class="form-signin" ngSubmit="loginSystem()">
       <h1 class="h3 mb-3 font-weight-normal" appHighlightSignIn>Welcome!</h1>
       <label for="inputLogin" class="sr-only">Email address</label>

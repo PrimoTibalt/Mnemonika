@@ -1,0 +1,5 @@
+<div *ngIf="gotModel.isFilled">
+    <div class="nav-item dropdown container-mnemos">
+        <a [appMnemoHighlight]="null" *ngFor="let mnem of mnems" class="nav-link" href="#" aria-haspopup="true" aria-expanded="false">{{mnem.Context}}</a>
+    </div>
+</div>

@@ -47,6 +47,7 @@ namespace Mnemonika.API.Controllers
             {
                 return BadRequest("User id is lower than 1.");
             }
+            
             try
             {
                 return Created("current", await this._repos.CreateMnemo(mnemo));

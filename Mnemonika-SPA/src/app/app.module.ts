@@ -1,22 +1,30 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
 import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { NavComponent } from './nav/nav.component';
-import { LoginComponent } from './login/login.component';
-import { HighlightDirective } from './highlight.directive';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms' ;
 import { ReactiveFormsModule } from '@angular/forms';
+
+import { AppComponent } from './app.component';
+import { NavComponent } from './nav/nav.component';
+import { LoginComponent } from './login/login.component';
+import { NewMnemoComponent } from './Mnemo/Mnemo.component';
+import { CollectionMnemosComponent } from './CollectionMnemos/CollectionMnemos.component';
+
+import { HighlightDirective } from './directives/highlight.directive';
+import { MnemoHighlightDirective } from './directives/mnemoHighlight.directive';
+
+import { LoginServiceService } from './services/loginService.service';
 
 @NgModule({
    declarations: [
       AppComponent,
       HighlightDirective,
+      MnemoHighlightDirective,
       NavComponent,
       LoginComponent,
-      LoginComponent
+      NewMnemoComponent,
+      CollectionMnemosComponent
    ],
    imports: [
       BrowserModule,
@@ -25,7 +33,9 @@ import { ReactiveFormsModule } from '@angular/forms';
       FormsModule,
       ReactiveFormsModule
    ],
-   providers: [],
+   providers: [
+      LoginServiceService
+   ],
    bootstrap: [
       AppComponent
    ]

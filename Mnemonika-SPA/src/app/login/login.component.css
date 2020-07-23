@@ -1,0 +1,21 @@
+.upper-login-container{
+    display: flex;
+    justify-content: center;
+}
+
+.login-container{
+    width: 540px;
+    display: flex;
+    margin: 15%;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+}
+
+.form-signin{
+    margin:auto;
+    padding: 10%;
+    -webkit-box-shadow:0px 2px 2px 2px #de1dde;
+    -moz-box-shadow:0px 2px 2px 2px #de1dde;
+    box-shadow:0px 2px 2px 2px #de1dde;
+}
