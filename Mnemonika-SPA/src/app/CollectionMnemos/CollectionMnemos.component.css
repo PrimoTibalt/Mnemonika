@@ -4,3 +4,9 @@
     margin: 20%;
     text-align: center;
 }
+
+.nav-link{
+    box-sizing: border-box;
+    margin: 4px;
+    padding: 8px;
+}

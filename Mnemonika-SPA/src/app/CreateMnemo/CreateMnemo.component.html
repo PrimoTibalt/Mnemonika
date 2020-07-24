@@ -1,0 +1,46 @@
+<div *ngIf="startCreating.isStarted" class="create-container">
+  <form #createForm="ngForm" ngSubmit="createPostRequiest()" novalidate="">
+    <div class="row">
+      <div class="col-md-6 mb-3">
+        <label for="word">Word</label>
+        <input [(ngModel)]="model.Word" [ngModelOptions]="{standalone: true}" type="text" class="form-control" id="word">
+        <div class="invalid-feedback">
+          Word is required.
+        </div>
+      </div>
+      <div class="col-md-6 mb-3">
+        <label for="translate">Translate</label>
+        <input [(ngModel)]="model.Translate" [ngModelOptions]="{standalone: true}" type="text" class="form-control" id="translate">
+        <div class="invalid-feedback">
+          Translate is required.
+        </div>
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label for="context">Context</label>
+      <input [(ngModel)]="model.Context" [ngModelOptions]="{standalone: true}" type="text" class="form-control" id="context" placeholder="Santence with such word.">
+      <div class="invalid-feedback" style="width: 100%;">
+        Context is required.
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label for="pictureUrl">Picture URL<span class="text-muted">(Optional)</span></label>
+      <input [(ngModel)]="model.PictureUrl" [ngModelOptions]="{standalone: true}" type="text" class="form-control" id="pictureUrl" placeholder="Address of image, that reminds you about this word.">
+      <div class="invalid-feedback">
+        Please enter valid URL, or leave it empty.
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label for="mnemonika">Mnemonika</label>
+      <input [(ngModel)]="model.Mnemo" [ngModelOptions]="{standalone: true}" type="text" class="form-control" id="mnemonika" placeholder="Some sentance that also reminds you about this word.">
+      <div class="invalid-feedback">
+        Mnemonika is required.
+      </div>
+    </div>
+
+    <button (click)="createPostRequiest()" class="btn btn-primary btn-lg btn-block" type="submit">Create Mnemo.</button>
+  </form>
+</div>>

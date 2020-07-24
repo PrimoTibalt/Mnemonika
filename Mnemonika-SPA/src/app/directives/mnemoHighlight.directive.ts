@@ -22,5 +22,6 @@ export class MnemoHighlightDirective {
   private highlight(border: string)
   {
     this.el.nativeElement.style.border = border;
+    this.el.nativeElement.style.padding = border ? '6px' : '8px';
   }
 }

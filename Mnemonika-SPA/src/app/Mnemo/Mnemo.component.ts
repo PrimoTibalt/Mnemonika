@@ -1,7 +1,10 @@
 import { LoginServiceService } from '../services/loginService.service';
 import { MnemoKeeperService } from '../services/mnemoKeeper.service';
+import { CreatorService } from '../services/Creator/Creator.service';
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { CookieService } from '../services/Cookie/Cookie.service';
+import { HeadersService } from '../services/Headers/Headers.service';
 
 @Component({
   selector: 'app-Mnemo',
@@ -10,14 +13,19 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 })
 export class NewMnemoComponent implements OnInit {
   authorized = { isAuthorized: false };
+  startCreating = { isStarted: false };
   buttonsHide = false;
   color = '';
 
   constructor(private loginService: LoginServiceService,
-     private http: HttpClient,
-     private keeper: MnemoKeeperService)
+              private http: HttpClient,
+              private keeper: MnemoKeeperService,
+              private creator: CreatorService,
+              private cookie: CookieService,
+              private headers: HeadersService)
   {
     this.authorized = loginService.authorized;
+    this.startCreating = creator.startCreating;
   }
 
   ngOnInit() { }
@@ -25,7 +33,7 @@ export class NewMnemoComponent implements OnInit {
   createMnemo()
   {
     this.hideButtons();
-    console.log('Create');
+    this.startCreating.isStarted = true;
   }
 
   async showMnemo()
@@ -42,25 +50,15 @@ export class NewMnemoComponent implements OnInit {
     );
   }
 
-  hideButtons()
+  private hideButtons()
   {
     this.buttonsHide = true;
   }
 
-  // returns cookie with such 'name'
-  // or undefined
-  getCookie(name: string)
+  private createRequestPromise()
   {
-    let matches = document.cookie.match(new RegExp(
-      "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
-    ));
-    return matches ? decodeURIComponent(matches[1]) : undefined;
-  }
-
-  createRequestPromise()
-  {
-    const url = 'http://localhost:5000/mnemo/' + this.getCookie('userId');
-    const headers = new HttpHeaders({'Authorization': 'bearer ' + this.getCookie('token')});
-    return this.http.get(url, {headers}).toPromise();
+    const url = 'http://localhost:5000/mnemo/' + this.cookie.getCookie('userId');
+    const headers = this.headers.authorizationHeaderFromToken();
+    return this.http.get(url, headers).toPromise();
   }
 }

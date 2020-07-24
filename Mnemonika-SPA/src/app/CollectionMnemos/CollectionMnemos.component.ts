@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MnemoKeeperService } from '../services/mnemoKeeper.service';
 import { MnemoModel } from '../MnemoModel/MnemoModel';
-import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-CollectionMnemos',

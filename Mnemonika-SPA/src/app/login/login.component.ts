@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { LoginServiceService } from '../services/loginService.service';
 
 @Component({
@@ -11,7 +10,7 @@ export class LoginComponent implements OnInit {
   color: string;
   authorized = { isAuthorized: false };
   model: any = {};
-  constructor(private http: HttpClient, private loginService: LoginServiceService) {
+  constructor(private loginService: LoginServiceService) {
     this.authorized = loginService.authorized;
    }
 

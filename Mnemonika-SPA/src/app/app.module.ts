@@ -10,6 +10,7 @@ import { NavComponent } from './nav/nav.component';
 import { LoginComponent } from './login/login.component';
 import { NewMnemoComponent } from './Mnemo/Mnemo.component';
 import { CollectionMnemosComponent } from './CollectionMnemos/CollectionMnemos.component';
+import { CreateMnemoComponent } from './CreateMnemo/CreateMnemo.component';
 
 import { HighlightDirective } from './directives/highlight.directive';
 import { MnemoHighlightDirective } from './directives/mnemoHighlight.directive';
@@ -24,7 +25,8 @@ import { LoginServiceService } from './services/loginService.service';
       NavComponent,
       LoginComponent,
       NewMnemoComponent,
-      CollectionMnemosComponent
+      CollectionMnemosComponent,
+      CreateMnemoComponent
    ],
    imports: [
       BrowserModule,

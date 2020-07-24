@@ -35,6 +35,7 @@ namespace Mnemonika.API.Controllers
             return Ok(await this._repos.GetMnemoForUserToday(userId));
         }
 
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> CreateMnemo(MnemoTransferDto mnemo)
         {
@@ -50,11 +51,12 @@ namespace Mnemonika.API.Controllers
             
             try
             {
+                mnemo.Date = DateTime.Now;
                 return Created("current", await this._repos.CreateMnemo(mnemo));
             }
             catch(ArgumentException exc)
             {
-                return BadRequest(exc.Message);
+                return BadRequest(exc.Message+" got here");
             }
         }
     }

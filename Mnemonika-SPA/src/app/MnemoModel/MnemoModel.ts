@@ -18,5 +18,5 @@ export class MnemoModel {
 
   Mnemo;
 
-  DateOfCreate = new Date(1);
+  DateOfCreate;
 }
