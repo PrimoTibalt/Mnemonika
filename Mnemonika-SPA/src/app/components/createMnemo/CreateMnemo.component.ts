@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { CreatorService } from '../services/Creator/Creator.service';
-import { MnemoModel } from '../MnemoModel/MnemoModel';
-import { CookieService } from '../services/Cookie/Cookie.service';
-import { ButtonsHiderService } from '../services/ButtonsHider/buttonsHider.service';
+import { CreatorService } from '../../services/Creator/Creator.service';
+import { MnemoModel } from '../../Models/MnemoModel/MnemoModel';
+import { CookieService } from '../../services/Cookie/Cookie.service';
+import { ButtonsHiderService } from '../../services/ButtonsHider/buttonsHider.service';
 
 @Component({
   selector: 'app-CreateMnemo',

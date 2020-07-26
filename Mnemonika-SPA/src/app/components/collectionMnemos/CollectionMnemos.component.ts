@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { MnemoKeeperService } from '../services/mnemoKeeper.service';
-import { MnemoModel } from '../MnemoModel/MnemoModel';
-import { ButtonsHiderService } from '../services/ButtonsHider/buttonsHider.service';
+import { MnemoKeeperService } from '../../services/mnemoKeeper.service';
+import { MnemoModel } from '../../Models/MnemoModel/MnemoModel';
+import { ButtonsHiderService } from '../../services/ButtonsHider/buttonsHider.service';
 
 @Component({
   selector: 'app-CollectionMnemos',

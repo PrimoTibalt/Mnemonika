@@ -6,17 +6,17 @@ import { FormsModule } from '@angular/forms' ;
 import { ReactiveFormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
-import { NavComponent } from './nav/nav.component';
-import { LoginComponent } from './login/login.component';
-import { NewMnemoComponent } from './Mnemo/Mnemo.component';
-import { CollectionMnemosComponent } from './CollectionMnemos/CollectionMnemos.component';
-import { CreateMnemoComponent } from './CreateMnemo/CreateMnemo.component';
+import { NavComponent } from './components/nav/nav.component';
+import { LoginComponent } from './components/login/login.component';
+import { NewMnemoComponent } from './components/Mnemo/Mnemo.component';
+import { CollectionMnemosComponent } from './components/CollectionMnemos/CollectionMnemos.component';
+import { CreateMnemoComponent } from './components/CreateMnemo/CreateMnemo.component';
 
 import { HighlightDirective } from './directives/highlight.directive';
 import { MnemoHighlightDirective } from './directives/mnemoHighlight.directive';
 
 import { LoginServiceService } from './services/Login/loginService.service';
-import { RegisterComponent } from './register/register.component';
+import { RegisterComponent } from './components/register/register.component';
 import { CommonModule } from '@angular/common';
 
 @NgModule({

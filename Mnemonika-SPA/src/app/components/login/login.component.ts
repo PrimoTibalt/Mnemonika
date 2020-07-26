@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { LoginServiceService } from '../services/Login/loginService.service';
+import { LoginServiceService } from '../../services/Login/loginService.service';
 import { CommonModule } from '@angular/common';
-import { RegisterService } from '../services/Register/register.service';
-import { UserModel } from '../UserModel/UserModel';
+import { RegisterService } from '../../services/Register/register.service';
+import { UserModel } from '../../Models/UserModel/UserModel';
 
 @Component({
   selector: 'app-login',

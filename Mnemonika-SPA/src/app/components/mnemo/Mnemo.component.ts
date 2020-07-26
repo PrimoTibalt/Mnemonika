@@ -1,11 +1,11 @@
-import { LoginServiceService } from '../services/Login/loginService.service';
-import { MnemoKeeperService } from '../services/mnemoKeeper.service';
-import { CreatorService } from '../services/Creator/Creator.service';
+import { LoginServiceService } from '../../services/Login/loginService.service';
+import { MnemoKeeperService } from '../../services/mnemoKeeper.service';
+import { CreatorService } from '../../services/Creator/Creator.service';
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { CookieService } from '../services/Cookie/Cookie.service';
-import { HeadersService } from '../services/Headers/Headers.service';
-import { ButtonsHiderService } from '../services/ButtonsHider/buttonsHider.service';
+import { CookieService } from '../../services/Cookie/Cookie.service';
+import { HeadersService } from '../../services/Headers/Headers.service';
+import { ButtonsHiderService } from '../../services/ButtonsHider/buttonsHider.service';
 
 @Component({
   selector: 'app-Mnemo',
