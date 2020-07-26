@@ -47,7 +47,6 @@ namespace Mnemonika.API.DAL.Repository
                 };
                 await _context.users.AddAsync(user);
                 await _context.SaveChangesAsync();
-                return new RegistrationResult() { Message="User Created." , IsSucceeded=true };
             }
             catch(Microsoft.EntityFrameworkCore.DbUpdateException)
             {
@@ -61,6 +60,8 @@ namespace Mnemonika.API.DAL.Repository
             {
                 return new RegistrationResult() { Message=invalidExc.Message, IsSucceeded=false };
             }
+            
+            return new RegistrationResult() { Message="User Created." , IsSucceeded=true };
         }
 
         private void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)

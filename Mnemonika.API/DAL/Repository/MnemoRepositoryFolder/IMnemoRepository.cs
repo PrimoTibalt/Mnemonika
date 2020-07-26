@@ -6,7 +6,7 @@ namespace Mnemonika.API.DAL.Repository.MnemoRepositoryFolder
 {
     public interface IMnemoRepository
     {
-         Task<IList<MnemoTransferDto>> GetMnemoForUserToday(int userId);
+         Task<IList<MnemoTransferDto>> GetMnemoForUserToday(string userId);
 
          Task<MnemoTransferDto> CreateMnemo(MnemoTransferDto mnemo);
     }

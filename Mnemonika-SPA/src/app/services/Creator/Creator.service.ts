@@ -18,9 +18,9 @@ export class CreatorService {
     const head = this.headers.authorizationHeaderFromToken();
     const request = this.http.post('http://localhost:5000/mnemo', model, head).toPromise();
     await request.then(resolve => {
-      this.startCreating.isStarted = false;
+      // Message about secceded creation.
     }, error => {
-      console.log(error);
+      // Message about error.
     });
   }
 }

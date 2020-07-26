@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MnemoKeeperService } from '../services/mnemoKeeper.service';
 import { MnemoModel } from '../MnemoModel/MnemoModel';
+import { ButtonsHiderService } from '../services/ButtonsHider/buttonsHider.service';
 
 @Component({
   selector: 'app-CollectionMnemos',
@@ -8,16 +9,24 @@ import { MnemoModel } from '../MnemoModel/MnemoModel';
   styleUrls: ['./CollectionMnemos.component.css']
 })
 export class CollectionMnemosComponent implements OnInit {
+  color = '';
   gotModel = { isFilled: false };
+  buttonsHide = { hide: false };
   mnems: MnemoModel[];
-  constructor(private keeper: MnemoKeeperService)
+  constructor(private keeper: MnemoKeeperService,
+              private hider: ButtonsHiderService)
   {
     this.gotModel = keeper.MnemoProp;
     this.mnems = MnemoKeeperService.Mnemonika;
-    console.log(this.mnems);
+    this.buttonsHide = hider.buttonsHide;
   }
 
   ngOnInit() {
   }
 
+  backToChoise()
+  {
+    this.gotModel.isFilled = false;
+    this.hider.showButtons();
+  }
 }

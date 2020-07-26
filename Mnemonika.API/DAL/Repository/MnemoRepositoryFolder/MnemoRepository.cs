@@ -22,10 +22,11 @@ namespace Mnemonika.API.DAL.Repository.MnemoRepositoryFolder
 
         public async Task<MnemoTransferDto> CreateMnemo(MnemoTransferDto mnemo)
         {
-            string query = @"INSERT INTO MnemoTable(userId, word, context, translate, pictureUrl, mnemo, date)" +
-            " VALUES(@userId, @word, @context, @translate, @pictureUrl, @mnemo, @date)";
+            string query = @"INSERT INTO MnemoTable(id, userId, word, context, translate, pictureUrl, mnemo, date)" +
+            " VALUES(@id, @userId, @word, @context, @translate, @pictureUrl, @mnemo, @date)";
             DynamicParameters parameters = new DynamicParameters();
-            parameters.Add("@userId", mnemo.UserId, DbType.Int64);
+            parameters.Add("@id", Guid.NewGuid().ToString(), DbType.String);
+            parameters.Add("@userId", mnemo.UserId, DbType.String);
             parameters.Add("@word", mnemo.Word, DbType.String);
             parameters.Add("@context", mnemo.Context, DbType.String);
             parameters.Add("@translate", mnemo.Translate, DbType.String);
@@ -45,21 +46,19 @@ namespace Mnemonika.API.DAL.Repository.MnemoRepositoryFolder
             return mnemo;
         }
 
-        public async Task<IList<MnemoTransferDto>> GetMnemoForUserToday(int userId)
+        public async Task<IList<MnemoTransferDto>> GetMnemoForUserToday(string userId)
         {
             string query = @"SELECT * FROM MnemoTable WHERE userId=@userId";
             DynamicParameters parameters = new DynamicParameters();
-            parameters.Add("@userId", userId, DbType.Int64);
-
+            parameters.Add("@userId", userId, DbType.String);
             var mnems = await this._context.ConnectionContext.QueryAsync(query, parameters);
-            
             if (mnems is null)
             {
                 throw new ArgumentException("Mnems doesn't exists");
             }
 
             var mnemsDto = mnems.Select(x => new MnemoTransferDto() {
-                UserId = (int)x.userId,
+                UserId = x.userId,
                 Word = x.word,
                 Context = x.context,
                 Translate = x.translate,
@@ -67,7 +66,6 @@ namespace Mnemonika.API.DAL.Repository.MnemoRepositoryFolder
                 Mnemo = x.mnemo,
                 Date = DateTime.Parse(x.date, CultureInfo.CurrentCulture)
             });
-
             return mnemsDto.ToList();
         }
     }

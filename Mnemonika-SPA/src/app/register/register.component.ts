@@ -12,6 +12,7 @@ export class RegisterComponent implements OnInit {
 
   color: string;
   wannaRegister = { IsItSo: false };
+  resultToShow: string = null;
   model: UserModel = new UserModel('', '');
 
   constructor(private register: RegisterService)
@@ -24,9 +25,11 @@ export class RegisterComponent implements OnInit {
 
   async registerSystem()
   {
-    if(await this.register.registerSystem(this.model))
-    {
-      this.wannaRegister.IsItSo = false;
-    }
+    this.resultToShow = await this.register.registerSystem(this.model);
+  }
+
+  backToSignIn()
+  {
+    this.wannaRegister.IsItSo = false;
   }
 }

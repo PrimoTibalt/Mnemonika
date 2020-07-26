@@ -5,6 +5,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { CookieService } from '../services/Cookie/Cookie.service';
 import { HeadersService } from '../services/Headers/Headers.service';
+import { ButtonsHiderService } from '../services/ButtonsHider/buttonsHider.service';
 
 @Component({
   selector: 'app-Mnemo',
@@ -14,7 +15,7 @@ import { HeadersService } from '../services/Headers/Headers.service';
 export class NewMnemoComponent implements OnInit {
   authorized = { isAuthorized: false };
   startCreating = { isStarted: false };
-  buttonsHide = false;
+  buttonsHide = { hide: false };
   color = '';
 
   constructor(private loginService: LoginServiceService,
@@ -22,23 +23,25 @@ export class NewMnemoComponent implements OnInit {
               private keeper: MnemoKeeperService,
               private creator: CreatorService,
               private cookie: CookieService,
-              private headers: HeadersService)
+              private headers: HeadersService,
+              private hider: ButtonsHiderService)
   {
     this.authorized = loginService.authorized;
     this.startCreating = creator.startCreating;
+    this.buttonsHide = hider.buttonsHide;
   }
 
   ngOnInit() { }
 
   createMnemo()
   {
-    this.hideButtons();
+    this.hider.hideButtons();
     this.startCreating.isStarted = true;
   }
 
   async showMnemo()
   {
-    this.hideButtons();
+    this.hider.hideButtons();
     const getMnemosPromise = this.createRequestPromise();
     await getMnemosPromise.then(
       resolve => {
@@ -48,11 +51,6 @@ export class NewMnemoComponent implements OnInit {
         console.log(error);
       }
     );
-  }
-
-  private hideButtons()
-  {
-    this.buttonsHide = true;
   }
 
   private createRequestPromise()

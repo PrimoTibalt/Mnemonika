@@ -1,7 +1,7 @@
 
 export class MnemoModel {
 
-  constructor(userId: number, word: string)
+  constructor(userId: string, word: string)
   {
     this.UserId = userId;
     this.Word = word;

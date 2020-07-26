@@ -1,4 +1,4 @@
-<div *ngIf='authorized.isAuthorized&&!buttonsHide' class="mnemo-Create-Container">
+<div *ngIf='authorized.isAuthorized&&!buttonsHide.hide' class="mnemo-Create-Container">
   <div class="mnemo-Create-Button">
     <button [appHighlight]="color" (click)="createMnemo()" class="btn btn-lg btn-primary btn-block" type="submit">Create new mnemo</button>
   </div>

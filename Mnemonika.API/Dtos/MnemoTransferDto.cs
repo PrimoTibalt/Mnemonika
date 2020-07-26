@@ -4,7 +4,7 @@ namespace Mnemonika.API.Dtos
 {
     public class MnemoTransferDto
     {
-        public int UserId {get; set;}
+        public string UserId {get; set;}
 
         public string Word {get; set;}
 

@@ -10,10 +10,10 @@ export class RegisterService {
   wannaRegister = { IsItSo: false };
   constructor(private http: HttpClient) { }
 
-  async registerSystem(model: UserModel): Promise<boolean>
+  async registerSystem(model: UserModel): Promise<string>
   {
     const signinPromise = this.http.post('http://localhost:5000/reg', model).toPromise();
-    let result = false;
+    let result = '';
     await signinPromise.then(
       resolve => {
         if (document.getElementById('regCont') != null)
@@ -22,11 +22,10 @@ export class RegisterService {
         }
 
         const message = resolve;
-        result = true;
+        result = 'Registration completed, please, back to sign in form.';
       },
       error => {
-        console.log(error);
-        result = false;
+        result = 'Error, bad login or password.\nLogin should contain 2 symbols.\nPassword should contain 8 symbols.';
       }
     );
     return result;

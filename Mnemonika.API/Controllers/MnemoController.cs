@@ -29,8 +29,8 @@ namespace Mnemonika.API.Controllers
 
         [Authorize]
         [HttpGet]
-        [Route("{userId:int}")]
-        public async Task<IActionResult> GetMyMnemos(int userId)
+        [Route("{userId}")]
+        public async Task<IActionResult> GetMyMnemos(string userId)
         {
             return Ok(await this._repos.GetMnemoForUserToday(userId));
         }
@@ -42,11 +42,6 @@ namespace Mnemonika.API.Controllers
             if (mnemo is null) 
             {
                 return BadRequest("Didn't get mnemo.");
-            }
-
-            if (mnemo.UserId < 1)
-            {
-                return BadRequest("User id is lower than 1.");
             }
             
             try

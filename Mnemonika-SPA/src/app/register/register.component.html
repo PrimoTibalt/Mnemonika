@@ -1,12 +1,16 @@
 <div  class="upper-register-container">
   <div *ngIf="wannaRegister.IsItSo" class="register-container" id="regCont">
     <form #loginForm="ngForm" class="form-signup">
-      <h1 class="h3 mb-3 font-weight-normal" appHighlightSignIn>Welcome!</h1>
+      <h1 class="h3 mb-3 font-weight-normal" appHighlightSignIn>Please, create new account!</h1>
       <label for="inputLogin" class="sr-only">Email address</label>
       <input type="login" id="inputLogin" class="form-control" placeholder="Login" required [ngModelOptions]="{standalone: true}" [(ngModel)]="model.Login">
       <label for="inputPassword" class="sr-only">Password</label>
       <input type="password" id="inputPassword" class="form-control" placeholder="Password" required [ngModelOptions]="{standalone: true}" [(ngModel)]="model.Password">
-      <button [appHighlight]="color" (click)="registerSystem()" class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
+      <div class="resultSignUp">
+        <p>{{resultToShow}}</p>
+      </div>
+      <button [appHighlight]="color" (click)="backToSignIn()" class="back-signup btn-signup btn btn-lg btn-primary btn-block" type="submit">Back</button>
+      <button [appHighlight]="color" (click)="registerSystem()" class="register-signup btn-signup btn btn-lg btn-primary btn-block" type="submit">Register</button>
     </form>
   </div>
 </div>
