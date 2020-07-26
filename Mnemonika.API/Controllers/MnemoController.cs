@@ -56,7 +56,7 @@ namespace Mnemonika.API.Controllers
             }
             catch(ArgumentException exc)
             {
-                return BadRequest(exc.Message+" got here");
+                return BadRequest(exc.Message);
             }
         }
     }

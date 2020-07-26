@@ -15,7 +15,9 @@ import { CreateMnemoComponent } from './CreateMnemo/CreateMnemo.component';
 import { HighlightDirective } from './directives/highlight.directive';
 import { MnemoHighlightDirective } from './directives/mnemoHighlight.directive';
 
-import { LoginServiceService } from './services/loginService.service';
+import { LoginServiceService } from './services/Login/loginService.service';
+import { RegisterComponent } from './register/register.component';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
    declarations: [
@@ -26,7 +28,8 @@ import { LoginServiceService } from './services/loginService.service';
       LoginComponent,
       NewMnemoComponent,
       CollectionMnemosComponent,
-      CreateMnemoComponent
+      CreateMnemoComponent,
+      RegisterComponent
    ],
    imports: [
       BrowserModule,

@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -34,7 +31,16 @@ namespace Mnemonika.API.Controllers
                 return BadRequest(ModelState);
             }
 
-            return Ok(await _repos.UserRegistration(user.Login, user.Password));
+            var result = await _repos.UserRegistration(user.Login, user.Password);
+
+            if (result.IsSucceeded)
+            {
+                return Ok(result);
+            }
+            else
+            {
+                return BadRequest(result.Message);
+            }
         }
     }
 }

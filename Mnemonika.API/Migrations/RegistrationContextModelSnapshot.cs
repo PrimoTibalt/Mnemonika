@@ -18,9 +18,8 @@ namespace Mnemonika.API.Migrations
 
             modelBuilder.Entity("Mnemonika.API.Models.User", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                    b.Property<string>("Id")
+                        .HasColumnType("TEXT");
 
                     b.Property<byte[]>("Password")
                         .IsRequired()

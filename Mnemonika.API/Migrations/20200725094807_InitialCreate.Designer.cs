@@ -9,7 +9,7 @@ using Mnemonika.API.DAL;
 namespace Mnemonika.API.Migrations
 {
     [DbContext(typeof(RegistrationContext))]
-    [Migration("20200718064856_InitialCreate")]
+    [Migration("20200725094807_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -20,9 +20,8 @@ namespace Mnemonika.API.Migrations
 
             modelBuilder.Entity("Mnemonika.API.Models.User", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                    b.Property<string>("Id")
+                        .HasColumnType("TEXT");
 
                     b.Property<byte[]>("Password")
                         .IsRequired()

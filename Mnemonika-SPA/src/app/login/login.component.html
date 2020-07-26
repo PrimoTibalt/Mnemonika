@@ -1,18 +1,19 @@
 <div  class="upper-login-container">
   <app-Mnemo></app-Mnemo>
-  <div *ngIf="!authorized.isAuthorized" class="login-container" id="logCont">
-    <form #loginForm="ngForm" class="form-signin" ngSubmit="loginSystem()">
+  <div *ngIf="!authorized.isAuthorized&&!wannaRegister.IsItSo" class="login-container" id="logCont">
+    <form #loginForm="ngForm" class="form-signin">
       <h1 class="h3 mb-3 font-weight-normal" appHighlightSignIn>Welcome!</h1>
-      <label for="inputLogin" class="sr-only">Email address</label>
-      <input type="login" id="inputLogin" class="form-control" placeholder="Login" required [ngModelOptions]="{standalone: true}" [(ngModel)]="model.username">
+      <label for="inputLogin" class="sr-only">Login</label>
+      <input type="login" id="inputLogin" class="form-control" placeholder="Login" required [ngModelOptions]="{standalone: true}" [(ngModel)]="model.Login">
       <label for="inputPassword" class="sr-only">Password</label>
-      <input type="password" id="inputPassword" class="form-control" placeholder="Password" required [ngModelOptions]="{standalone: true}" [(ngModel)]="model.password">
+      <input type="password" id="inputPassword" class="form-control" placeholder="Password" required [ngModelOptions]="{standalone: true}" [(ngModel)]="model.Password">
       <div class="checkbox mb-3">
         <label>
           <input type="checkbox" value="remember-me"> Remember me
         </label>
       </div>
       <button [appHighlight]="color" (click)="loginSystem()" class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+      <button [appHighlight]="color" (click)="registerSystem()" class="btn btn-lg btn-primary btn-block" type="submit">Sign up</button>
     </form>
   </div>
 </div>

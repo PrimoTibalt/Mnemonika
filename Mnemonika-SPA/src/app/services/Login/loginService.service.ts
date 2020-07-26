@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { CookieService } from '../services/Cookie/Cookie.service';
+import { CookieService } from '../Cookie/Cookie.service';
+import { UserModel } from 'src/app/UserModel/UserModel';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,7 @@ export class LoginServiceService {
   model: any = {};
   constructor(private http: HttpClient, private cookie: CookieService) { }
 
-  async loginSystem(message: any){
+  async loginSystem(message: UserModel){
     const signinPromise = this.http.post('http://localhost:5000/login', message).toPromise();
     await signinPromise.then(
       resolve => {

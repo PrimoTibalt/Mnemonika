@@ -11,8 +11,7 @@ namespace Mnemonika.API.Migrations
                 name: "users",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                    Id = table.Column<string>(nullable: false),
                     Username = table.Column<string>(nullable: false),
                     Password = table.Column<byte[]>(nullable: false),
                     Salt = table.Column<byte[]>(nullable: false)
