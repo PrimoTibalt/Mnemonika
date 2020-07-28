@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { MnemoModel } from 'src/app/MnemoModel/MnemoModel';
+import { MnemoModel } from '../../Models/MnemoModel/MnemoModel';
 import { HttpClient } from '@angular/common/http';
 import { HeadersService } from '../Headers/Headers.service';
 import { CookieService } from '../Cookie/Cookie.service';

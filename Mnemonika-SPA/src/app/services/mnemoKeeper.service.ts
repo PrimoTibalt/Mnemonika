@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {MnemoModel} from '../MnemoModel/MnemoModel';
+import {MnemoModel} from '../Models/MnemoModel/MnemoModel';
 
 @Injectable({
   providedIn: 'root'
