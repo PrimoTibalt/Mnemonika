@@ -20,6 +20,10 @@ namespace MnemonikaTests
 
         private const string PASSWORD = "password";
 
+        private const string WRONG_LOGIN = "1235lkh";
+
+        private const string WRONG_PASSWORD = "1poidfgih";
+
         [SetUp]
         public void Setup()
         {
@@ -29,12 +33,12 @@ namespace MnemonikaTests
         }
 
         [Test]
-        public void TestAuthorization()
+        public void TestAuthorizationLogIn()
         {
-            driver.FindElement(_loginInput).SendKeys(LOGIN);
-            driver.FindElement(_passwordInput).SendKeys(PASSWORD);
+            driver.Navigate().Refresh();
 
-            driver.FindElement(_signinButton).Click();
+            this.LogIn(LOGIN, PASSWORD);
+
             if (driver.FindElement(_createButton).Displayed && driver.FindElement(_showButton).Displayed)
             {
                 Assert.Pass();
@@ -45,10 +49,35 @@ namespace MnemonikaTests
             }
         }
 
+        [Test]
+        public void TestFailAuthorization()
+        {
+            driver.Navigate().Refresh();
+
+            this.LogIn(WRONG_LOGIN, WRONG_PASSWORD);
+
+            if (driver.FindElement(_createButton).Displayed && driver.FindElement(_showButton).Displayed)
+            {
+                Assert.Fail();
+            }
+            else
+            {
+                Assert.Pass();
+            }
+        }
+
+        private void LogIn(string login, string password)
+        {
+            driver.FindElement(_loginInput).SendKeys(login);
+            driver.FindElement(_passwordInput).SendKeys(password);
+
+            driver.FindElement(_signinButton).Click();
+        }
+
         [TearDown]
         public void TearDown()
         {
-
+            driver.Close();
         }
     }
 }
