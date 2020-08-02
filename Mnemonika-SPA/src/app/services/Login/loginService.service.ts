@@ -12,9 +12,9 @@ export class LoginServiceService {
   model: any = {};
   constructor(private http: HttpClient, private cookie: CookieService) { }
 
-  async loginSystem(message: UserModel){
+  public async loginSystem(message: UserModel): Promise<boolean>{
     const signinPromise = this.http.post('http://localhost:5000/login', message).toPromise();
-    await signinPromise.then(
+    return await signinPromise.then(
       resolve => {
         this.answer = resolve;
         this.cookie.addCookie('userId', this.answer.userId);
@@ -27,7 +27,6 @@ export class LoginServiceService {
         return true;
       },
       error => {
-        console.log(error);
         return false;
       }
     );

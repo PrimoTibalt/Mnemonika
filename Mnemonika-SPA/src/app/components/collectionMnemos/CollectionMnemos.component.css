@@ -3,10 +3,12 @@
     width: 960px;
     margin: 20%;
     text-align: center;
+    z-index: 10;
 }
 
 .nav-link{
     box-sizing: border-box;
     margin: 4px;
     padding: 8px;
+    z-index: 10;
 }

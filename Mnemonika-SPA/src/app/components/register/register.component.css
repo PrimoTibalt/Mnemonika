@@ -2,8 +2,10 @@
     display: inline-block;
     margin-top: 0;
     width: 49%;
+    z-index: 10;
 }
 
 .back-signup{
     margin-right: 5px;
+    z-index: 10;
 }

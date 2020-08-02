@@ -24,7 +24,7 @@ export class LoginComponent implements OnInit {
   }
 
   async loginSystem(){
-    if (this.loginService.loginSystem(this.model))
+    if ((await this.loginService.loginSystem(this.model)).valueOf())
     {
       this.authorized.isAuthorized = true;
     }
