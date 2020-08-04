@@ -8,6 +8,7 @@ using System.Data.SqlClient;
 using System.Configuration;
 using System;
 using System.Globalization;
+using Mnemonika.API.Services;
 
 namespace Mnemonika.API.DAL.Repository.MnemoRepositoryFolder
 {
@@ -57,7 +58,7 @@ namespace Mnemonika.API.DAL.Repository.MnemoRepositoryFolder
                 throw new ArgumentException("Mnems doesn't exists");
             }
 
-            var mnemsDto = mnems.Select(x => new MnemoTransferDto() {
+            var mnemsDto = SelectorForMnemosToday.GetMnemosForToday(mnems.Select(x => new MnemoTransferDto() {
                 UserId = x.userId,
                 Word = x.word,
                 Context = x.context,
@@ -65,7 +66,8 @@ namespace Mnemonika.API.DAL.Repository.MnemoRepositoryFolder
                 PictureUrl = x.pictureUrl,
                 Mnemo = x.mnemo,
                 Date = DateTime.Parse(x.date, CultureInfo.CurrentCulture)
-            });
+            }));
+
             return mnemsDto.ToList();
         }
     }
