@@ -14,23 +14,15 @@ export class MnemoKeeperService {
   fillKeeper(dynamicModel: any): void
   {
     let curr;
-    for (curr of dynamicModel){
-      let alreadyExists = false;
-      const model = new MnemoModel(curr.userId, curr.word);
-      this.fillMnemoModel(curr, model);
-      for (const old of MnemoKeeperService.Mnemonika){
-        if (old.Context === model.Context && old.Word === model.Word){
-          alreadyExists = true;
-        }
-      }
+    if (dynamicModel != null){
+      this.clearMnemo();
+      for (curr of dynamicModel){
+        const model = new MnemoModel(curr.userId, curr.word);
+        this.fillMnemoModel(curr, model);
 
-      if (alreadyExists){
-        continue;
-      } else {
         MnemoKeeperService.Mnemonika.push(model);
       }
     }
-
     this.checkMnemonika();
   }
 
@@ -49,5 +41,17 @@ export class MnemoKeeperService {
     to.Translate = from.translate;
     to.PictureUrl = from.PictureUrl;
     to.DateOfCreate = new Date(from.date);
+  }
+
+  private clearMnemo(): void
+  {
+    const length =  MnemoKeeperService.Mnemonika.length;
+    if (length > 0)
+    {
+      for (let i = 0; i < length; i++)
+      {
+        MnemoKeeperService.Mnemonika.pop();
+      }
+    }
   }
 }
