@@ -39,19 +39,39 @@ namespace Mnemonika.API.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateMnemo(MnemoTransferDto mnemo)
         {
-            if (mnemo is null) 
+            if (mnemo is null)
             {
                 return BadRequest("Didn't get mnemo.");
             }
-            
+
             try
             {
                 mnemo.Date = DateTime.Now;
                 return Created("current", await this._repos.CreateMnemo(mnemo));
             }
-            catch(ArgumentException exc)
+            catch (ArgumentException exc)
             {
                 return BadRequest(exc.Message);
+            }
+        }
+
+        [Authorize]
+        [HttpPut]
+        public async Task<IActionResult> SetRead(MnemoTransferDto mnemo)
+        {
+            if (mnemo is null)
+            {
+                return BadRequest("Didn't get mnemo.");
+            }
+
+            try
+            {
+                await this._repos.SetReadStatus(mnemo);
+                return Ok();
+            }
+            catch(ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
             }
         }
     }

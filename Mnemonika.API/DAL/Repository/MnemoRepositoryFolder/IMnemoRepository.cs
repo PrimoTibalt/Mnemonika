@@ -9,5 +9,7 @@ namespace Mnemonika.API.DAL.Repository.MnemoRepositoryFolder
          Task<IList<MnemoTransferDto>> GetMnemoForUserToday(string userId);
 
          Task<MnemoTransferDto> CreateMnemo(MnemoTransferDto mnemo);
+
+         Task SetReadStatus(MnemoTransferDto mnemo);
     }
 }
