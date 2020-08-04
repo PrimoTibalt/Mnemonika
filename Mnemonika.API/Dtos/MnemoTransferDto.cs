@@ -17,5 +17,7 @@ namespace Mnemonika.API.Dtos
         public string Mnemo {get; set;}
 
         public DateTime Date {get; set;}
+
+        public bool IsReadToday { get; set; }
     }
 }

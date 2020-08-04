@@ -24,5 +24,7 @@ namespace Mnemonika.API.Models
         public string PictureUrl {get; set;}
 
         public string Mnemo {get; set;}
+
+        public bool IsReadToday {get; set;}
     }
 }

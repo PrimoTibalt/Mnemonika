@@ -58,14 +58,16 @@ namespace Mnemonika.API.DAL.Repository.MnemoRepositoryFolder
                 throw new ArgumentException("Mnems doesn't exists");
             }
 
-            var mnemsDto = SelectorForMnemosToday.GetMnemosForToday(mnems.Select(x => new MnemoTransferDto() {
+            var mnemsDto = SelectorForMnemosToday.GetMnemosForToday(mnems.Select(x => new MnemoTransferDto()
+            {
                 UserId = x.userId,
                 Word = x.word,
                 Context = x.context,
                 Translate = x.translate,
                 PictureUrl = x.pictureUrl,
                 Mnemo = x.mnemo,
-                Date = DateTime.Parse(x.date, CultureInfo.CurrentCulture)
+                Date = DateTime.Parse(x.date, CultureInfo.CurrentCulture),
+                IsReadToday = Boolean.Parse(x.isReadToday)
             }));
 
             return mnemsDto.ToList();
