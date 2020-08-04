@@ -1,6 +1,7 @@
 <div *ngIf="gotModel.isFilled&&buttonsHide.hide">
     <div class="nav-item dropdown container-mnemos">
         <a [appMnemoHighlight]="null" *ngFor="let mnem of mnems" class="nav-link" href="#" aria-haspopup="true" aria-expanded="false">{{mnem.Context}}</a>
+        <button [appHighlight]="color" id="collection-back-button" (click)="backToChoise()" class="btn btn-lg btn-primary btn-block" type="submit">Back to choice.</button>
     </div>
 </div>
-<button *ngIf="gotModel.isFilled&&buttonsHide.hide" [appHighlight]="color" (click)="backToChoise()" class="btn btn-lg btn-primary btn-block" type="submit">Back to choice.</button>
+

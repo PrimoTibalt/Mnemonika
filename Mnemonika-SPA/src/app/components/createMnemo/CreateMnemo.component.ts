@@ -11,6 +11,8 @@ import { ButtonsHiderService } from '../../services/ButtonsHider/buttonsHider.se
 })
 export class CreateMnemoComponent implements OnInit {
 
+  color: string;
+
   startCreating = { isStarted: false };
 
   model: MnemoModel = new MnemoModel('', '');

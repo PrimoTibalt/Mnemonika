@@ -11,12 +11,21 @@ export class HighlightDirective {
 
   @HostListener('mouseenter') onMouseEnter()
   {
-    this.highlight(this.highlightColor || '#de1dde');
+    if(this.el.nativeElement.id === 'collection-back-button'){
+      this.highlight('black');
+      this.el.nativeElement.style.color = 'white';
+    }
+    else{
+      this.highlight(this.highlightColor || '#de1dde');
+    }
   }
 
   @HostListener('mouseleave') onMouseLeave()
   {
     this.highlight(this.highlightColor || null);
+    if(this.el.nativeElement.id === 'collection-back-button'){
+      this.el.nativeElement.style.color = 'black';
+    }
   }
 
   private highlight(color: string)
