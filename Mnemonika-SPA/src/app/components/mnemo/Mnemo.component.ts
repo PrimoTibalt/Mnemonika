@@ -33,13 +33,13 @@ export class NewMnemoComponent implements OnInit {
 
   ngOnInit() { }
 
-  createMnemo()
+  public createMnemo()
   {
     this.hider.hideButtons();
     this.startCreating.isStarted = true;
   }
 
-  async showMnemo()
+  public async showMnemo()
   {
     this.hider.hideButtons();
     const getMnemosPromise = this.createRequestPromise();

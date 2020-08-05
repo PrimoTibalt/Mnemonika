@@ -38,7 +38,7 @@ namespace Mnemonika.API.DAL.Repository.MnemoRepositoryFolder
 
         public async Task<IList<MnemoTransferDto>> GetMnemoForUserToday(string userId)
         {
-            string query = @"SELECT * FROM MnemoTable WHERE userId=@userId";
+            string query = @"SELECT * FROM MnemoTable WHERE userId=@userId AND isReadToday='false'";
             DynamicParameters parameters = new DynamicParameters();
             parameters.Add("@userId", userId, DbType.String);
             var mnems = await this._context.ConnectionContext.QueryAsync(query, parameters);

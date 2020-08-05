@@ -14,11 +14,21 @@ export class CreatorService {
   constructor(private http: HttpClient,
               private headers: HeadersService) { }
 
-  async createPostRequest(model: MnemoModel){
+  public async createPostRequest(model: MnemoModel): Promise<void>{
     const head = this.headers.authorizationHeaderFromToken();
     const request = this.http.post('http://localhost:5000/mnemo', model, head).toPromise();
     await request.then(resolve => {
       // Message about secceded creation.
+    }, error => {
+      // Message about error.
+    });
+  }
+
+  public async createPutRequest(model: MnemoModel): Promise<void>{
+    const head = this.headers.authorizationHeaderFromToken();
+    const request = this.http.put('http://localhost:5000/mnemo', model, head).toPromise();
+    await request.then(resolve => {
+      // Message about secceded creation
     }, error => {
       // Message about error.
     });

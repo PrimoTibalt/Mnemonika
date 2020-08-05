@@ -7,12 +7,14 @@ import { MnemoModel } from '../Models/MnemoModel/MnemoModel';
 export class MnemoKeeperService {
   static Mnemonika: MnemoModel[] = [];
 
-  MnemoProp = { isFilled: false };
+  gotModel = { isFilled: false };
+  cameHere = { isHere: false };
 
   constructor() { }
 
-  fillKeeper(dynamicModel: any): void
+  public fillKeeper(dynamicModel: any): void
   {
+    this.cameHere.isHere = true;
     let curr;
     if (dynamicModel != null){
       this.clearMnemo();
@@ -30,7 +32,7 @@ export class MnemoKeeperService {
   {
     if (MnemoKeeperService.Mnemonika.length > 0)
     {
-      this.MnemoProp.isFilled = true;
+      this.gotModel.isFilled = true;
     }
   }
 

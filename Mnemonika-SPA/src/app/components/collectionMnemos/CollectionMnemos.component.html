@@ -1,7 +1,14 @@
-<div *ngIf="gotModel.isFilled&&buttonsHide.hide">
+<div id="upper-container-mnemos" *ngIf="(gotModel.isFilled||cameHere.isHere)&&buttonsHide.hide">
     <div class="nav-item dropdown container-mnemos">
-        <a [appMnemoHighlight]="null" *ngFor="let mnem of mnems" class="nav-link" href="#" aria-haspopup="true" aria-expanded="false">{{mnem.Context}}</a>
-        <button [appHighlight]="color" id="collection-back-button" (click)="backToChoise()" class="btn btn-lg btn-primary btn-block" type="submit">Back to choice.</button>
+        <div *ngIf="!gotModel.isFilled">No mnemos for today.</div>
+        <div class="container-mnemo" *ngFor="let mnem of mnems">
+            <a [appMnemoHighlight]="null" class="nav-link" href="#" aria-haspopup="true" aria-expanded="false">
+                {{mnem.Context}}
+            </a>
+            <button id="collection-read-button" (click)="isReadToday(mnem)" class="btn btn-lg btn-primary btn-block" type="submit">&#10003;</button>
+        </div>
     </div>
+
+    <button *ngIf="cameHere.isHere" [appHighlight]="color" id="collection-back-button" (click)="backToChoise()" class="btn btn-lg btn-primary btn-block" type="submit">Back to choice.</button>
 </div>
 
