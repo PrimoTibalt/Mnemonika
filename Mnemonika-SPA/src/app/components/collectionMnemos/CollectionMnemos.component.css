@@ -81,7 +81,7 @@
     border-radius: 0;
     padding: 0;
     justify-content: center;
-    z-index: 11;
+    z-index: 13;
 }
 
 #collection-read-button:hover{

@@ -6,17 +6,19 @@ export class MnemoModel {
     this.UserId = userId;
     this.Word = word;
   }
-  UserId;
+  UserId: string;
 
-  Word;
+  Word: string;
 
-  Context;
+  Context: string;
 
-  Translate;
+  Translate: string;
 
-  PictureUrl;
+  PictureUrl: string;
 
-  Mnemo;
+  Mnemo: string;
 
-  DateOfCreate;
+  DateOfCreate: string;
+
+  isTranslated = false;
 }

@@ -3,6 +3,7 @@ import { MnemoKeeperService } from '../../services/mnemoKeeper.service';
 import { MnemoModel } from '../../Models/MnemoModel/MnemoModel';
 import { ButtonsHiderService } from '../../services/ButtonsHider/buttonsHider.service';
 import { CreatorService } from 'src/app/services/Creator/Creator.service';
+import { R3TargetBinder } from '@angular/compiler';
 
 @Component({
   selector: 'app-CollectionMnemos',
@@ -45,10 +46,53 @@ export class CollectionMnemosComponent implements OnInit {
   public async isReadToday(mnemo: MnemoModel): Promise<void>
   {
     await this.creator.createPutRequest(mnemo);
-    this.deleteItem(mnemo.Context);
+    if(mnemo.isTranslated)
+    {
+      this.deleteItem((mnemo.Context ? mnemo.Context : mnemo.Word) + ' ' + mnemo.Translate + ' ');
+    }else{
+      this.deleteItem(mnemo.Context ? mnemo.Context : mnemo.Word);
+    }
   }
 
-  private async deleteItem(context: string): Promise<void>
+  public async clickItem(e: any): Promise<void>
+  {
+    if(e.target.text !== undefined)
+    {
+      const mnemo = this.findMnemo(e.target.text);
+      if(mnemo.isTranslated){
+        e.target.text = e.target.text.replace(mnemo.Translate, '');
+      }else{
+        e.target.text += mnemo.Translate;
+      }
+      mnemo.isTranslated = !mnemo.isTranslated;
+    }
+  }
+
+  private findMnemo(word: string): MnemoModel
+  {
+    word = this.replaceTranslate(word);
+    word = word.replace(' ', '').trim();
+    for(let mnemo of this.mnems)
+    {
+      if(mnemo.Word === word)
+      {
+        return mnemo;
+      }
+    }
+
+    return undefined;
+  }
+
+  private replaceTranslate(text: string): string
+  {
+    for(let mnem of this.mnems)
+    {
+      text = text.replace(mnem.Translate, '');
+    }
+    return text;
+  }
+
+  private async deleteItem(text: string): Promise<void>
   {
     if(!this.isReady)
     {
@@ -60,7 +104,7 @@ export class CollectionMnemosComponent implements OnInit {
       let aElement = this.collection[i].getElementsByClassName('nav-link')[0];
       if (aElement != null )
       {
-        if (aElement.firstChild.textContent.replace(' ', '') === context + ' ') // js - the best language.
+        if (aElement.firstChild.textContent.replace(' ', '').trim() === text.trim()) // js - the best language.
         {
           (this.collection[i].firstChild as HTMLElement).style.visibility = 'hidden';
           (this.collection[i].firstChild as HTMLElement).style.zIndex = '-1';

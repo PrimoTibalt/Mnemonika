@@ -29,7 +29,6 @@ export class CreatorService {
     const head = this.headers.authorizationHeaderFromToken();
     const request = this.http.put('http://localhost:5000/mnemo', model, head).toPromise();
     await request.then(resolve => {
-      this.alertify.success('Mnemo edited!');
     }, error => {
       this.alertify.error(error);
     });
