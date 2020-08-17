@@ -2,8 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { MnemoKeeperService } from '../../services/mnemoKeeper.service';
 import { MnemoModel } from '../../Models/MnemoModel/MnemoModel';
 import { ButtonsHiderService } from '../../services/ButtonsHider/buttonsHider.service';
-import { CookieService } from 'src/app/services/Cookie/Cookie.service';
-import { HeadersService } from 'src/app/services/Headers/Headers.service';
 import { CreatorService } from 'src/app/services/Creator/Creator.service';
 
 @Component({

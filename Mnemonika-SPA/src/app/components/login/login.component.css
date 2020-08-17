@@ -1,0 +1,22 @@
+.upper-login-container, .upper-register-container{
+    display: flex;
+    justify-content: center;
+}
+
+.login-container, .register-container{
+    width: 540px;
+    display: flex;
+    margin: 15%;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+}
+
+.form-signin, .form-signup{
+    margin:auto;
+    padding: 10%;
+    border: 2px solid #de1dde;
+    -webkit-box-shadow:0px 2px 2px 2px #de1dde;
+    -moz-box-shadow:0px 2px 2px 2px #de1dde;
+    box-shadow:0px 2px 2px 2px #de1dde;
+}

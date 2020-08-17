@@ -20,17 +20,17 @@ export class LoginComponent implements OnInit {
     this.wannaRegister = registerService.wannaRegister;
    }
 
-  ngOnInit() {
+  ngOnInit(): void {
   }
 
-  async loginSystem(){
+  async loginSystem(): Promise<void>{
     if ((await this.loginService.loginSystem(this.model)).valueOf())
     {
       this.authorized.isAuthorized = true;
     }
   }
 
-  async registerSystem(){
+  async registerSystem(): Promise<void>{
     this.registerService.wannaRegister.IsItSo = true;
   }
 }

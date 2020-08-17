@@ -1,6 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
 @import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 @import "../node_modules/font-awesome/css/font-awesome.min.css";
+@import "../node_modules/alertifyjs/build/css/alertify.min.css";
+@import "../node_modules/alertifyjs/build/css/themes/bootstrap.min.css";
 
 
     ::-webkit-scrollbar { width: 3px; height: 3px;}
@@ -11,27 +13,6 @@
     ::-webkit-scrollbar-corner { background-color: #999;}
     ::-webkit-resizer { background-color: #666;}
 
-    .upper-login-container, .upper-register-container{
-        display: flex;
-        justify-content: center;
-    }
-    
-    .login-container, .register-container{
-        width: 540px;
-        display: flex;
-        margin: 15%;
-        justify-content: center;
-        align-items: center;
-        z-index: 10;
-    }
-    
-    .form-signin, .form-signup{
-        margin:auto;
-        padding: 10%;
-        -webkit-box-shadow:0px 2px 2px 2px #de1dde;
-        -moz-box-shadow:0px 2px 2px 2px #de1dde;
-        box-shadow:0px 2px 2px 2px #de1dde;
-    }
 
     .pulse {
         animation: pulse 0.7s ease-out;
