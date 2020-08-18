@@ -7,6 +7,7 @@ using System.Data;
 using System;
 using System.Globalization;
 using Mnemonika.API.Services;
+using Mnemonika.API.DAL.Repository.MnemoRepositoryFolder.ReadMnemo;
 
 namespace Mnemonika.API.DAL.Repository.MnemoRepositoryFolder
 {
@@ -14,9 +15,12 @@ namespace Mnemonika.API.DAL.Repository.MnemoRepositoryFolder
     {
         private MnemoContext _context;
 
-        public MnemoRepository(MnemoContext context)
+        private IReadMnemoRepository _readMnemo;
+
+        public MnemoRepository(MnemoContext context, IReadMnemoRepository readMnemo)
         {
             this._context = context;
+            this._readMnemo = readMnemo;
         }
 
         public async Task<MnemoTransferDto> CreateMnemo(MnemoTransferDto mnemo)
@@ -38,6 +42,7 @@ namespace Mnemonika.API.DAL.Repository.MnemoRepositoryFolder
 
         public async Task<IList<MnemoTransferDto>> GetMnemoForUserToday(string userId)
         {
+            this._readMnemo.DeleteUpdateRead();
             string query = @"SELECT * FROM MnemoTable WHERE userId=@userId AND isReadToday='false'";
             DynamicParameters parameters = new DynamicParameters();
             parameters.Add("@userId", userId, DbType.String);
@@ -59,6 +64,7 @@ namespace Mnemonika.API.DAL.Repository.MnemoRepositoryFolder
             parameters.Add("@userId", mnemo.UserId, DbType.String);
             parameters.Add("@word", mnemo.Word, DbType.String);
             parameters.Add("@translate", mnemo.Translate, DbType.String);
+            this._readMnemo.AddToday(await this.GetIdOfMnemo(mnemo));
             await this.queryAsync(query, parameters);
         }
 
@@ -87,6 +93,16 @@ namespace Mnemonika.API.DAL.Repository.MnemoRepositoryFolder
                  Date = DateTime.Parse(x.date, CultureInfo.CurrentCulture),
                  IsReadToday = Boolean.Parse(x.isReadToday)
              });
+        }
+
+        private async Task<string> GetIdOfMnemo(MnemoTransferDto mnemo)
+        {
+            string query = "SELECT id FROM MnemoTable WHERE userId=@userId AND word=@word AND translate=@translate";
+            DynamicParameters parameters = new DynamicParameters();
+            parameters.Add("@userId", mnemo.UserId, DbType.String);
+            parameters.Add("@word", mnemo.Word, DbType.String);
+            parameters.Add("@translate", mnemo.Translate, DbType.String);
+            return (await this._context.ConnectionContext.QueryAsync(query, parameters)).FirstOrDefault().id;
         }
     }
 }

@@ -20,6 +20,7 @@ using System.Data;
 using System.Data.SqlClient;
 using Mnemonika.API.DAL.Repository.MnemoRepositoryFolder;
 using Microsoft.Data.Sqlite;
+using Mnemonika.API.DAL.Repository.MnemoRepositoryFolder.ReadMnemo;
 
 namespace Mnemonika.API
 {
@@ -50,7 +51,8 @@ namespace Mnemonika.API
             services.AddScoped<IUserRepositoryView, UserRepositoryView>();
             services.AddScoped<IUserRepositoryRegistration, UserRepositoryRegistration>();
             services.AddTransient<IDbConnection>(x => new SqliteConnection(this.Configuration.GetConnectionString("MnemoConnection")));
-            services.AddScoped<MnemoContext, MnemoContext>();
+            services.AddSingleton<MnemoContext, MnemoContext>();
+            services.AddScoped<IReadMnemoRepository, ReadMnemoRepository>();
             services.AddScoped<IMnemoRepository, MnemoRepository>();
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(option => 

@@ -101,10 +101,13 @@ export class CollectionMnemosComponent implements OnInit {
     this.isReady = false;
     for (let i = 0; i < this.collection.length; i++)
     {
-      let aElement = this.collection[i].getElementsByClassName('nav-link')[0];
+      let aElement = this.collection[i].getElementsByClassName('mnemo-text')[0];
       if (aElement != null )
       {
-        if (aElement.firstChild.textContent.replace(' ', '').trim() === text.trim()) // js - the best language.
+        let content = aElement.firstChild.textContent.replace(' ', '').trim() !== '' ?
+          aElement.firstChild.textContent : aElement.textContent;
+        content = content.replace(' ', '').trim();
+        if (content === text.trim()) // js - the best language.
         {
           (this.collection[i].firstChild as HTMLElement).style.visibility = 'hidden';
           (this.collection[i].firstChild as HTMLElement).style.zIndex = '-1';
