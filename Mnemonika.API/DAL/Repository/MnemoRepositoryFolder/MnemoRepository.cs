@@ -54,11 +54,11 @@ namespace Mnemonika.API.DAL.Repository.MnemoRepositoryFolder
 
         public async Task SetReadStatus(MnemoTransferDto mnemo)
         {
-            string query = @"UPDATE MnemoTable SET isReadToday='"+true.ToString().ToLowerInvariant()+"' WHERE userId=@userId AND word=@word AND context=@context";
+            string query = @"UPDATE MnemoTable SET isReadToday='"+true.ToString().ToLowerInvariant()+"' WHERE userId=@userId AND word=@word AND translate=@translate";
             DynamicParameters parameters = new DynamicParameters();
             parameters.Add("@userId", mnemo.UserId, DbType.String);
             parameters.Add("@word", mnemo.Word, DbType.String);
-            parameters.Add("@context", mnemo.Context, DbType.String);
+            parameters.Add("@translate", mnemo.Translate, DbType.String);
             await this.queryAsync(query, parameters);
         }
 
