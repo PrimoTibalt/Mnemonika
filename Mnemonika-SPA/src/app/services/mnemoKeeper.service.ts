@@ -25,14 +25,25 @@ export class MnemoKeeperService {
         MnemoKeeperService.Mnemonika.push(model);
       }
     }
-    this.checkMnemonika();
+    this.showCollection();
   }
 
-  private checkMnemonika(): void
+  private showCollection(): void
   {
     if (MnemoKeeperService.Mnemonika.length > 0)
     {
       this.gotModel.isFilled = true;
+      setTimeout(() => {
+        const elements = document.getElementsByClassName('mnemo-text');
+        for (let num = 0; num < elements.length; num++)
+        {
+          for (const mnem of MnemoKeeperService.Mnemonika)
+          {
+            elements[num].innerHTML = elements[num].innerHTML.replace(
+              mnem.Word.replace(' ', '').trim(), '<em><b>' + mnem.Word + '</b></em>');
+          }
+        }
+      }, 700);
     }
   }
 
@@ -42,7 +53,6 @@ export class MnemoKeeperService {
     to.Mnemo = from.mnemo;
     to.Translate = from.translate;
     to.PictureUrl = from.PictureUrl;
-    to.DateOfCreate = new Date(from.date);
   }
 
   private clearMnemo(): void

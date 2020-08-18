@@ -2,7 +2,7 @@
     <div class="nav-item dropdown container-mnemos">
         <div *ngIf="!gotModel.isFilled">No mnemos for today.</div>
         <div class="container-mnemo" *ngFor="let mnem of mnems">
-            <a (click)="clickItem($event)" [appMnemoHighlight]="null" class="nav-link" href="#" aria-haspopup="true" aria-expanded="false">
+            <a (click)="clickItem($event)" [appMnemoHighlight]="null" class="nav-link mnemo-text" href="#" aria-haspopup="true" aria-expanded="false">
                 {{mnem.Context ? mnem.Context:mnem.Word}}
             </a>
             <button id="collection-read-button" (click)="isReadToday(mnem)" class="btn btn-lg btn-primary btn-block" type="submit">&#10003;</button>
