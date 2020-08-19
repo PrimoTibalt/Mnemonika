@@ -33,17 +33,7 @@ export class MnemoKeeperService {
     if (MnemoKeeperService.Mnemonika.length > 0)
     {
       this.gotModel.isFilled = true;
-      setTimeout(() => {
-        const elements = document.getElementsByClassName('mnemo-text');
-        for (let num = 0; num < elements.length; num++)
-        {
-          for (const mnem of MnemoKeeperService.Mnemonika)
-          {
-            elements[num].innerHTML = elements[num].innerHTML.replace(
-              mnem.Word.replace(' ', '').trim(), '<em><b>' + mnem.Word + '</b></em>');
-          }
-        }
-      }, 700);
+      this.emphasizeWord();
     }
   }
 
@@ -65,5 +55,59 @@ export class MnemoKeeperService {
         MnemoKeeperService.Mnemonika.pop();
       }
     }
+  }
+
+  private emphasizeWord(): void
+  {
+    setTimeout(() => {
+      const elements: any = document.getElementsByClassName('mnemo-text') as HTMLCollectionOf<HTMLElement>;
+      const mnemsToIgnore: MnemoModel[] = [];
+      for (const element of elements)
+      {
+        for (const mnem of MnemoKeeperService.Mnemonika)
+        {
+          if (mnemsToIgnore.includes(mnem))
+          {
+            continue;
+          }
+          const text: string = element.innerHTML;
+          if (this.rightMnemo(mnem, text))
+          {
+            const upperText = text.toUpperCase();
+            const index = upperText.indexOf(mnem.Word.toUpperCase());
+            const pre = text.substr(0, index);
+            const after = text.substr(index + mnem.Word.length, element.innerHTML.length);
+            let word = mnem.Word;
+            if (text.charAt(index).toUpperCase() === text.charAt(index))
+            {
+              word = word.charAt(0).toUpperCase().concat(word.substr(1, word.length - 1));
+            }
+
+            element.innerHTML = pre.concat('<em><u><strong>' + word + '</strong></u></em>', after);
+            mnemsToIgnore.push(mnem);
+          }
+        }
+      }
+    }, 700);
+  }
+
+  private rightMnemo(mnem: MnemoModel, elemText: string): boolean
+  {
+    if (mnem.Context.replace(' ', '').trim() !== '')
+    {
+      if (elemText.toUpperCase().includes(mnem.Context.toUpperCase()))
+      {
+        return true;
+      }
+    }
+    else
+    {
+      if (elemText.toUpperCase().includes(mnem.Word.toUpperCase()))
+      {
+        return true;
+      }
+    }
+
+    return false;
   }
 }
