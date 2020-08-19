@@ -4,6 +4,7 @@ import { MnemoModel } from '../../Models/MnemoModel/MnemoModel';
 import { ButtonsHiderService } from '../../services/ButtonsHider/buttonsHider.service';
 import { CreatorService } from 'src/app/services/Creator/Creator.service';
 import { R3TargetBinder } from '@angular/compiler';
+import { AlertifyService } from 'src/app/services/Alertify/Alertify.service';
 
 @Component({
   selector: 'app-CollectionMnemos',
@@ -21,11 +22,12 @@ export class CollectionMnemosComponent implements OnInit {
 
   lastContext = '';
   collection = document.getElementsByClassName('container-mnemo') as HTMLCollectionOf<HTMLElement>;
-  isReady = true;
+  private isReady = true; // syncronization on deleting.
 
   constructor(private keeper: MnemoKeeperService,
               private hider: ButtonsHiderService,
-              private creator: CreatorService)
+              private creator: CreatorService,
+              private alertify: AlertifyService)
   {
     this.gotModel = keeper.gotModel;
     this.cameHere = keeper.cameHere;
@@ -94,50 +96,82 @@ export class CollectionMnemosComponent implements OnInit {
 
   private async deleteItem(text: string): Promise<void>
   {
-    if(!this.isReady)
+    if(this.codeIsUnreachable())
     {
       return;
     }
-    this.isReady = false;
+    
+    this.setCodeUnreachable();
     for (let i = 0; i < this.collection.length; i++)
     {
-      let aElement = this.collection[i].getElementsByClassName('mnemo-text')[0];
-      if (aElement != null )
+      let elemText = this.collection[i].getElementsByClassName('mnemo-text')[0];
+      if (elemText === null)
       {
-        let content = aElement.firstChild.textContent.replace(' ', '').trim() !== '' ?
-          aElement.firstChild.textContent : aElement.textContent;
-        content = content.replace(' ', '').trim();
-        if (content === text.trim()) // js - the best language.
-        {
-          (this.collection[i].firstChild as HTMLElement).style.visibility = 'hidden';
-          (this.collection[i].firstChild as HTMLElement).style.zIndex = '-1';
-
-          (this.collection[i].lastChild as HTMLElement).style.visibility = 'hidden';
-          (this.collection[i].lastChild as HTMLElement).style.zIndex = '-1';
-
-          this.collection[i].style.animationPlayState = 'running';
-
-          setTimeout(()=>{
-            try{
-              this.collection[i].remove();
-              this.isReady = true;
-            }
-            catch (TypeError){
-              console.log('undefined occures');
-            }}, 2000);
-          break;
-        }
+        break;
       }
-      else{
+      let content = this.contextOrWord(elemText);
+      content = content.replace(' ', '').trim();
+      if (content.toUpperCase() === text.trim().toUpperCase()) 
+      {
+        this.hideTextIntoElement(i);
+        this.runAnimationOfElement(i);
+        this.removeItemWithTimeout(i);
         break;
       }
     }
+
+    this.actionOnEmptyCollection();
+  }
+
+  private removeItemWithTimeout(index: number): void
+  {
+    setTimeout(()=>{
+      try{
+        this.collection[index].remove();
+        this.isReady = true;
+      }
+      catch (TypeError){
+        this.alertify.error('undefined occures on delete item');
+      }}, 2000);
+  }
+
+  private hideTextIntoElement(index: number): void
+  {
+    (this.collection[index].firstChild as HTMLElement).style.visibility = 'hidden';
+    (this.collection[index].firstChild as HTMLElement).style.zIndex = '-1';
+
+    (this.collection[index].lastChild as HTMLElement).style.visibility = 'hidden';
+    (this.collection[index].lastChild as HTMLElement).style.zIndex = '-1';
+  }
+
+  private runAnimationOfElement(index: number): void
+  {
+    this.collection[index].style.animationPlayState = 'running';
+  }
+
+  private actionOnEmptyCollection()
+  {
     setTimeout(()=>{
       if (this.collection.length === 0)
       {
         this.gotModel.isFilled = false;
       }
     }, 3000);
-    
+  }
+
+  private contextOrWord(element: Element): string
+  {
+    return element.firstChild.textContent.replace(' ', '').trim() !== '' ?
+    element.firstChild.textContent : element.textContent;
+  }
+
+  private setCodeUnreachable(): void
+  {
+    this.isReady = false;
+  }
+
+  private codeIsUnreachable(): boolean
+  {
+    return !this.isReady;
   }
 }

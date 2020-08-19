@@ -54,22 +54,15 @@ namespace Mnemonika.API.DAL.Repository.MnemoRepositoryFolder.ReadMnemo
 
         private async Task QueryDeleteUpdate(IEnumerable<dynamic> data)
         {
-            StringBuilder dynamicQueryDelete = new StringBuilder();
-            StringBuilder dynamicQueryUpdate = new StringBuilder();
+            StringBuilder dynamicQueryDelete = this.createQueryToDelete();
+            StringBuilder dynamicQueryUpdate = this.createQueryToUpdate();
 
-            StringBuilder dateNow = new StringBuilder();
-            dateNow.Append(DateTime.Now.Day.ToString());
-            dateNow.Append(".");
-            dateNow.Append(DateTime.Now.Month.ToString());
-            dateNow.Append(".");
-            dateNow.Append(DateTime.Now.Year.ToString());
+            string dateNow = this.getOnlyDateOfToday();
 
-            dynamicQueryDelete.Append("DELETE FROM ReadDay WHERE ");
-            dynamicQueryUpdate.Append($"UPDATE MnemoTable SET isReadToday = '{false.ToString().ToLowerInvariant()}' WHERE isReadToday = 'false' AND ");
             bool have = false;
             foreach (var couple in data)
             {
-                if (DateTime.Parse(couple.time) < DateTime.Parse(dateNow.ToString()))
+                if (DateTime.Parse(couple.time) < DateTime.Parse(dateNow))
                 {
                     dynamicQueryDelete.Append($"id={couple.id} OR ");
                     dynamicQueryUpdate.Append($"id={couple.mnemoId} OR ");
@@ -83,11 +76,10 @@ namespace Mnemonika.API.DAL.Repository.MnemoRepositoryFolder.ReadMnemo
             }
 
             dynamicQueryDelete.Remove(dynamicQueryDelete.Length - 3, 3);
-            dynamicQueryUpdate.Remove(dynamicQueryDelete.Length - 3, 3);
+            dynamicQueryUpdate.Remove(dynamicQueryUpdate.Length - 3, 3);
             try
             {
-                Console.WriteLine(dynamicQueryDelete.ToString());
-                Console.WriteLine(dynamicQueryUpdate.ToString());
+                // to DO : add logging.
                 await this._context.ConnectionContext.QueryAsync(dynamicQueryDelete.ToString());
                 await this._context.ConnectionContext.QueryAsync(dynamicQueryUpdate.ToString());
             }
@@ -95,6 +87,31 @@ namespace Mnemonika.API.DAL.Repository.MnemoRepositoryFolder.ReadMnemo
             {
                 throw new ArgumentException(e.Message);
             }
+        }
+
+        private StringBuilder createQueryToDelete()
+        {
+            StringBuilder dynamicQueryDelete = new StringBuilder();
+            dynamicQueryDelete.Append("DELETE FROM ReadDay WHERE ");
+            return dynamicQueryDelete;
+        }
+
+        private StringBuilder createQueryToUpdate()
+        {
+            StringBuilder dynamicQueryUpdate = new StringBuilder();
+            dynamicQueryUpdate.Append($"UPDATE MnemoTable SET isReadToday = '{false.ToString().ToLowerInvariant()}' WHERE isReadToday = 'true' AND (");
+            return dynamicQueryUpdate;
+        }
+
+        private string getOnlyDateOfToday()
+        {
+            StringBuilder dateNow = new StringBuilder();
+            dateNow.Append(DateTime.Now.Day.ToString());
+            dateNow.Append(".");
+            dateNow.Append(DateTime.Now.Month.ToString());
+            dateNow.Append(".");
+            dateNow.Append(DateTime.Now.Year.ToString());
+            return dateNow.ToString();
         }
     }
 }
